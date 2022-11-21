@@ -33,7 +33,7 @@ config = Config()
             "jonatansmith/aws-black-belt-analytics",
             "main",
             authentication=cdk.SecretValue.secrets_manager(
-                "github_blackbeltanalyticslabs"
+                "blackbelt-lab-github-jonatansmith"
             ),
         )
     )
