@@ -127,3 +127,43 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# VSCode extension
+.vscode/
+/.favorites.json
+*.code-workspace
+
+# TypeScript incremental build states
+*.tsbuildinfo
+
+# Local state files & OS specifics
+.DS_Store
+node_modules/
+lerna-debug.log
+dist/
+pack/
+.BUILD_COMPLETED
+.local-npm/
+.tools/
+coverage/
+.nyc_output
+.LAST_BUILD
+*.sw[a-z]
+*~
+.idea
+
+# We don't want tsconfig at the root
+/tsconfig.json
+
+# Backed up json files
+*.json-e
+
+# CDK Context & Staging files
+cdk.context.json
+.cdk.staging/
+cdk.out/
+.out
+
+# DDK Context & Staging files
+.ddk.out/
