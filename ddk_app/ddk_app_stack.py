@@ -311,7 +311,7 @@ class DdkApplicationStack(BaseStack):
                 extra_files=None,
                 extra_jars=None,
                 extra_jars_first=None,
-                extra_python_files=None,
+                extra_python_files=None
             ),
             connections=[
                 glue.Connection.from_connection_name(
@@ -333,9 +333,11 @@ class DdkApplicationStack(BaseStack):
             ),
             enable_profiling_metrics=True,
             default_arguments={
-                "iceberg_job_catalog_warehouse": ddk_bucket.s3_url_for_object(
+                "--iceberg_job_catalog_warehouse": ddk_bucket.s3_url_for_object(
                     "lakehouse/tolldata_raw/"
                 ),
+                "--TempDir": ddk_bucket.s3_url_for_object("glue_tmp/"),
+                "--job-bookmark-option": "job-bookmark-enable"
             },
             max_retries=0,
         )
