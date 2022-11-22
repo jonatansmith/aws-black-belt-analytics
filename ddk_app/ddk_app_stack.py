@@ -27,6 +27,7 @@ from aws_cdk import Duration
 ### # Under Job parameters, specify Key as --iceberg_job_catalog_warehouse and Value as your S3 path (e.g. s3://<bucket-name>/<iceberg-warehouse-path>).
 ### # Enable Job Bookmarks for the Glue job
 
+
 class DdkApplicationStack(BaseStack):
     def __init__(
         self, scope: Construct, id: str, environment_id: str, **kwargs: Any
@@ -34,7 +35,10 @@ class DdkApplicationStack(BaseStack):
         super().__init__(scope, id, environment_id, **kwargs)
 
         ddk_bucket = S3Factory.bucket(
-            self, "lakehouse-blackbelt-bucket", environment_id
+            self,
+            "lakehouse-blackbelt-bucket",
+            environment_id,
+            event_bridge_enabled=True,
         )
 
         defaultVPC = Vpc.from_lookup(
@@ -105,7 +109,6 @@ class DdkApplicationStack(BaseStack):
             s3_settings=s3_target_endpoint_settings,
         )
 
-    
         dms_cdc_task_blackbelt = DMSFactory.replication_task(
             self,
             "dms_cdc_task_blackbelt",
@@ -291,7 +294,7 @@ class DdkApplicationStack(BaseStack):
                 ),
                 aws_iam.ManagedPolicy.from_aws_managed_policy_name(
                     "AmazonEC2ContainerRegistryFullAccess"
-                )
+                ),
             ],
         )
         ddk_bucket.grant_read_write(
@@ -310,14 +313,16 @@ class DdkApplicationStack(BaseStack):
                 extra_jars_first=None,
                 extra_python_files=None,
             ),
-            connections=[glue.Connection.from_connection_name(
-                self, "IcebergConnection", "Iceberg Connector for Glue 3.0"
-            )],
+            connections=[
+                glue.Connection.from_connection_name(
+                    self, "IcebergConnection", "Iceberg Connector for Glue 3.0"
+                )
+            ],
             max_concurrent_runs=50,
             role=glue_role,
             timeout=Duration.minutes(10),
             worker_count=2,
-            worker_type= glue.WorkerType.G_1_X,
+            worker_type=glue.WorkerType.G_1_X,
             spark_ui=glue.SparkUIProps(
                 enabled=True,
                 bucket=ddk_bucket,
@@ -327,18 +332,22 @@ class DdkApplicationStack(BaseStack):
                 enabled=True,
             ),
             enable_profiling_metrics=True,
-            max_retries=0
+            default_arguments={
+                "iceberg_job_catalog_warehouse": ddk_bucket.s3_url_for_object(
+                    "lakehouse/tolldata_raw/"
+                ),
+            },
+            max_retries=0,
         )
 
         athena_workgroup = athena.CfnWorkGroup(
             self,
-            'athena_workgroup',
-            name='athena_workgroup',
+            "athena_workgroup",
+            name="athena_workgroup",
             work_group_configuration=athena.CfnWorkGroup.WorkGroupConfigurationProperty(
                 publish_cloud_watch_metrics_enabled=True,
                 result_configuration=athena.CfnWorkGroup.ResultConfigurationProperty(
                     output_location="s3://" + ddk_bucket.bucket_name + "/athena_tmp/",
-                )
-            )
+                ),
+            ),
         )
-        
