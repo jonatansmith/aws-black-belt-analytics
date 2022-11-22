@@ -337,7 +337,8 @@ class DdkApplicationStack(BaseStack):
                     "lakehouse/tolldata_raw/"
                 ),
                 "--TempDir": ddk_bucket.s3_url_for_object("glue_tmp/"),
-                "--job-bookmark-option": "job-bookmark-enable"
+                "--job-bookmark-option": "job-bookmark-enable",
+                "--enable-glue-datacatalog": ""
             },
             max_retries=0,
         )
