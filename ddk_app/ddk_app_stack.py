@@ -326,7 +326,7 @@ class DdkApplicationStack(BaseStack):
             spark_ui=glue.SparkUIProps(
                 enabled=True,
                 bucket=ddk_bucket,
-                prefix="sparkHistoryLogs",
+                prefix="sparkHistoryLogs/",
             ),
             continuous_logging=glue.ContinuousLoggingProps(
                 enabled=True,
