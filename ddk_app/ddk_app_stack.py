@@ -30,7 +30,7 @@ from aws_cdk import Duration
 
 class DdkApplicationStack(BaseStack):
     def __init__(
-        self, scope: Construct, id: str, environment_id: str, **kwargs: Any
+        self, scope: Construct, id: str, environment_id: str, resource_params: dict, **kwargs: Any
     ) -> None:
         super().__init__(scope, id, environment_id, **kwargs)
 
@@ -42,7 +42,7 @@ class DdkApplicationStack(BaseStack):
         )
 
         defaultVPC = Vpc.from_lookup(
-            self, "default-vpc", vpc_id="vpc-0ba1ac1b3ca7a3efb"
+            self, "default-vpc", vpc_id=resource_params.get('vpc-id')
         )
 
         dms_sg = SecurityGroup(

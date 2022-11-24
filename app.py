@@ -14,10 +14,11 @@ class ApplicationStage(cdk.Stage):
         self,
         scope,
         environment_id: str,
+        resource_params: dict,
         **kwargs,
     ) -> None:
         super().__init__(scope, f"Ddk{environment_id.title()}Application", **kwargs)
-        DdkApplicationStack(self, "DataPipeline", environment_id)
+        DdkApplicationStack(self, "DataPipeline", environment_id, resource_params)
 
 
 config = Config()
@@ -39,8 +40,8 @@ config = Config()
     )
     .add_synth_action()
     .build()
-    .add_stage("dev", ApplicationStage(app, "dev", env=config.get_env("dev")))
-    .add_stage("prd", ApplicationStage(app, "prd", env=config.get_env("prd")), manual_approvals=True)
+    .add_stage("dev", ApplicationStage(app, "dev", env=config.get_env("dev"), resource_params=config.get_env_config("dev").get('resources') ) )
+    .add_stage("prd", ApplicationStage(app, "prd", env=config.get_env("prd"), resource_params=config.get_env_config("prd").get('resources') ), manual_approvals=True)
     .synth()
 )
 

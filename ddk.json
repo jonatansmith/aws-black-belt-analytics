@@ -5,14 +5,16 @@
             "account": "408798440949",
             "region": "us-east-1",
             "resources": {
-                "ddk-bucket": {"versioned": false, "removal_policy": "destroy"}
+                "ddk-bucket": {"versioned": false, "removal_policy": "destroy"},
+                "vpc-id": "vpc-0ba1ac1b3ca7a3efb"
             }
         },
         "prd": {
             "account": "547224505484",
             "region": "us-east-1",
             "resources": {
-                "ddk-bucket": {"versioned": false, "removal_policy": "destroy"}
+                "ddk-bucket": {"versioned": false, "removal_policy": "destroy"},
+                "vpc-id": "vpc-0db6066823a55b2c4"
             }
         }
     }
