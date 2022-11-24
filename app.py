@@ -40,6 +40,7 @@ config = Config()
     .add_synth_action()
     .build()
     .add_stage("dev", ApplicationStage(app, "dev", env=config.get_env("dev")))
+    .add_stage("prd", ApplicationStage(app, "prd", env=config.get_env("prd")), manual_approvals=True)
     .synth()
 )
 

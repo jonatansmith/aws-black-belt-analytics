@@ -7,6 +7,13 @@
             "resources": {
                 "ddk-bucket": {"versioned": false, "removal_policy": "destroy"}
             }
+        },
+        "prd": {
+            "account": "547224505484",
+            "region": "us-east-1",
+            "resources": {
+                "ddk-bucket": {"versioned": false, "removal_policy": "destroy"}
+            }
         }
     }
 }
