@@ -15,7 +15,7 @@ from aws_cdk import Duration
 ### DDK App Stack
 
 ### Source data is from TollData from this workshop: https://catalog.us-east-1.prod.workshops.aws/workshops/4ee30ea1-f102-4563-a422-8d6364ded7d2/en-US
-### Iceberg sample from this: https://aws.amazon.com/blogs/big-data/implement-a-cdc-based-upsert-in-a-data-lake-using-apache-iceberg-and-aws-glue/
+### Iceberg example from this: https://aws.amazon.com/blogs/big-data/implement-a-cdc-based-upsert-in-a-data-lake-using-apache-iceberg-and-aws-glue/
 ### List of requirements not on this DDK/CDK template manually created:
 ### # VPC / Subnets
 ### # DMS Subnet Group

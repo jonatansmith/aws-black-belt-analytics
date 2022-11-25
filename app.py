@@ -35,13 +35,12 @@ config = Config()
             "main",
             authentication=cdk.SecretValue.secrets_manager(
                 "blackbelt-lab-github-jonatansmith"
-            ),
+            ), # Name ot the secret previously created on AWS Secrets Manager to store the GitHub token
         )
     )
     .add_synth_action()
     .build()
     .add_stage("dev", ApplicationStage(app, "dev", env=config.get_env("dev"), resource_params=config.get_env_config("dev").get('resources') ) )
-    .add_stage("prd", ApplicationStage(app, "prd", env=config.get_env("prd"), resource_params=config.get_env_config("prd").get('resources') ), manual_approvals=True)
     .synth()
 )
 
