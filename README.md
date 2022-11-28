@@ -25,7 +25,14 @@ The first destination of data is on a S3 bucket called 'landing', in CSV format.
 ##### Datalake S3 RAW Layer
 RAW Data of replicated DB on Parquet format and with Iceberg Metadata
 ##### AWS Glue Job
-A Glue Job with Apache Iceberg connector and Job Bookmark will run on each update on Landing and will execute the operation on RAW Layer
+A Glue PySpark Job with Apache Iceberg connector and Job Bookmark will run on each update on Landing and will execute the operation on RAW Layer
 ##### AWS Athena
 AWS Athena has native integration with Apache Iceberg tables, allowing SQL queries to be executed on demand
+##### AWS DDK
+AWS DDK (https://github.com/awslabs/aws-ddk) is based on AWS CDK and allows IaC for data workflows and modern data architecture on AWS.
 
+## Initial Deploy
+Install AWS CDK and DDK, clone this repo and execute the following command:
+`ddk deploy --profile <PROFILE>`
+
+Then, edit the sourcecode repo and your code and commit. Codepipeline will deploy all changes.
